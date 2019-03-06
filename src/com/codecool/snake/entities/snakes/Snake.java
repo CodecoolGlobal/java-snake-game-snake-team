@@ -54,9 +54,10 @@ public class Snake implements Animatable {
     public void addPart(int numParts) {
         GameEntity parent = getLastPart();
         Vec2d position = parent.getPosition();
+        Snake snake = head.getSnake();
 
         for (int i = 0; i < numParts; i++) {
-            SnakeBody newBodyPart = new SnakeBody(position);
+            SnakeBody newBodyPart = new SnakeBody(position, snake);
             body.add(newBodyPart);
         }
         Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
