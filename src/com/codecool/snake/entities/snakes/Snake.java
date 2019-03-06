@@ -6,6 +6,8 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -16,10 +18,11 @@ public class Snake implements Animatable {
     private static int instanceCounter = 0;
     private boolean alive;
     private KeyCode turnLeftKey, turnRightKey;
-    private float speed = 2;
+    private double speed = 2;
     private int health = 100;
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
+    private List<Spitju> spitjus;
 
 
 
@@ -34,6 +37,7 @@ public class Snake implements Animatable {
         } else {
             turnLeftKey = KeyCode.A; turnRightKey = KeyCode.D;
         }
+        spitjus = new ArrayList<>();
     }
 
 
@@ -43,11 +47,16 @@ public class Snake implements Animatable {
         updateSnakeBodyHistory();
         checkForGameOverConditions();
         body.doPendingModifications();
+        if(spitjus.size()>0)
+            spitjus.forEach(Spitju::updateBulletPosition);
     }
 
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
+        if(InputHandler.getInstance().isKeyPressed(KeyCode.SPACE)){
+            spitjus.add(new Spitju(this));
+        }
         if(InputHandler.getInstance().isKeyPressed(turnLeftKey)){
             turnDir = SnakeControl.TURN_LEFT;
         }
@@ -84,6 +93,15 @@ public class Snake implements Animatable {
         health += diff;
     }
 
+
+    double getSpeed(){
+        return speed;
+    }
+
+
+    public SnakeHead getHead(){
+        return head;
+    }
 
     private void checkForGameOverConditions() {
         if (head.isOutOfBounds() || health <= 0) {
