@@ -21,10 +21,14 @@ public class SimplePowerUp extends GameEntity implements Interactable {
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
             destroy();
-            if (rnd.nextInt(10) < 5) {
-                new BerryPowerUp();
-            } else {
+            int randomNum = rnd.nextInt(10);
+            if (randomNum < 3) {
+                new HeartPowerUp();
+            }
+            if (randomNum < 5) {
                 new RedbullPowerUp();
+            } else {
+                new BerryPowerUp();
             }
         }
     }

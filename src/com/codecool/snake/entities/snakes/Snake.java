@@ -57,6 +57,10 @@ public class Snake implements Animatable {
         speed += 1;
     }
 
+    public void fillHealth() {
+        health += 10;
+    }
+
 
     public void changeHealth(int diff) {
         health += diff;
