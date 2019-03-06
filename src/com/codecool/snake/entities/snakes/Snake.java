@@ -8,6 +8,7 @@ import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
 
+import java.util.List;
 
 
 public class Snake implements Animatable {
@@ -19,12 +20,13 @@ public class Snake implements Animatable {
 
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
+    private boolean alive;
 
 
     public Snake(Vec2d position) {
+        alive = true;
         head = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
-
         addPart(4);
         ++instanceCounter;
         if(instanceCounter ==1){
@@ -78,10 +80,24 @@ public class Snake implements Animatable {
 
     private void checkForGameOverConditions() {
         if (head.isOutOfBounds() || health <= 0) {
-            System.out.println("Game Over");
-            Globals.getInstance().stopGame();
+            List<GameEntity> bodyParts = body.getList();
+            bodyParts.forEach(GameEntity::destroy);
+            head.destroy();
+            alive = false;
+            --instanceCounter;
+            System.out.println(instanceCounter);
+            if(instanceCounter == 0){
+                System.out.println("Game Over");
+                Globals.getInstance().stopGame();
+            }
         }
     }
+
+
+    public boolean isAlive(){
+        return alive;
+    }
+
 
     private void updateSnakeBodyHistory() {
         GameEntity prev = head;
