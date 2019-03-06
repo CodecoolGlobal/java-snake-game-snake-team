@@ -16,6 +16,7 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     private static Random rnd = new Random();
 
 
+
     public SimpleEnemy() {
         super(10);
         setImage(Globals.getInstance().getImage("SimpleEnemy"));
