@@ -18,7 +18,6 @@ public class Main extends Application {
         primaryStage.setTitle("Snake Game");
         primaryStage.setScene(mainScene);
         primaryStage.show();
-
         game.start();
     }
 
