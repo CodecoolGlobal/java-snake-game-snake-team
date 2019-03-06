@@ -10,7 +10,7 @@ import com.sun.javafx.geom.Vec2d;
 
 public class SnakeBody extends GameEntity {
     private Queue<Vec2d> history = new LinkedList<>();
-    private static final int historySize = 10;
+    private static final int historySize = 3;
 
     public SnakeBody(Vec2d coord) {
         setImage(Globals.getInstance().getImage("SnakeBody"));

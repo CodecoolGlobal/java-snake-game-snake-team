@@ -11,18 +11,21 @@ public class SimplePowerUp extends GameEntity implements Interactable {
     private static Random rnd = new Random();
 
     public SimplePowerUp() {
-        setImage(Globals.getInstance().getImage("PowerUpBerry"));
-
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
     }
+
 
     @Override
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
             destroy();
-            new SimplePowerUp();
+            if (rnd.nextInt(10) < 5) {
+                new BerryPowerUp();
+            } else {
+                new RedbullPowerUp();
+            }
         }
     }
 
