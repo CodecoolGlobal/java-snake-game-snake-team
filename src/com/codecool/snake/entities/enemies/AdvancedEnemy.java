@@ -16,32 +16,31 @@ public class AdvancedEnemy extends Enemy implements Animatable, Interactable {
     /*This enemy will move on a rectangular pattern. If the snake connects with it, the snake is slowed down.
     * It will never be destroyed.*/
 
-    private Point2D heading;
     private int dirX = 1;
     private int dirY = 1;
 
 
 
     public AdvancedEnemy(){
-        super(10);
+        super(0);
         System.out.println("I AM REBORN!");
         setImage(Globals.getInstance().getImage("AdvancedEnemy"));
         setX((Globals.WINDOW_WIDTH / 4));
         setY((Globals.WINDOW_HEIGHT /4));
-        double direction = 90;
-            int speed = 2;
-        heading = Utils.directionToVector(direction, speed);
     }
 
 
     @Override
     public void apply(GameEntity entity) {
+        if(entity instanceof SnakeHead || entity instanceof SnakeBody){
+            System.out.println(getMessage());
+        }
 
     }
 
     @Override
     public String getMessage() {
-        return "running";
+        return "BAAAARF\nSLOWED DOWN!";
     }
 
     @Override
@@ -61,7 +60,5 @@ public class AdvancedEnemy extends Enemy implements Animatable, Interactable {
         }
         setX(getX() + dirX);
         setY(getY() + dirY);
-
-
     }
 }
