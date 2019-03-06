@@ -1,5 +1,4 @@
 package com.codecool.snake;
-
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.entities.powerups.BerryPowerUp;
@@ -11,25 +10,28 @@ import com.sun.javafx.geom.Vec2d;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class Game extends Pane {
-    private Snake snake = null;
+    private List<Snake> snakes;
     private GameTimer gameTimer = new GameTimer();
 
 
     public Game() {
+        snakes = new LinkedList<>();
         Globals.getInstance().game = this;
         Globals.getInstance().display = new Display(this);
         Globals.getInstance().setupResources();
-
         init();
     }
 
     public void init() {
-        spawnSnake();
+        spawnSnake(200,500);
+        spawnSnake(400,400);
         spawnEnemies(4);
         spawnPowerUps(2, 2, 2);
-
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
@@ -41,8 +43,8 @@ public class Game extends Pane {
         Globals.getInstance().startGame();
     }
 
-    private void spawnSnake() {
-        snake = new Snake(new Vec2d(500, 500));
+    private void spawnSnake(int xCor, int yCor) {
+        snakes.add(new Snake(new Vec2d(xCor, yCor)));
     }
 
     private void spawnEnemies(int numberOfEnemies) {
