@@ -10,9 +10,12 @@ import javafx.geometry.Point2D;
 public class Spitju extends GameEntity implements Interactable {
 
 
+    private Snake snake;
     private Point2D heading;
 
-    public Spitju(Snake snake) {
+
+    Spitju(Snake snake) {
+        this.snake = snake;
         setImage(Globals.getInstance().getImage("bullet"));
         setRotate(snake.getHead().getRotate()-90);
         Vec2d startPos = snake.getHead().getPosition();
@@ -22,9 +25,14 @@ public class Spitju extends GameEntity implements Interactable {
     }
 
 
-    public void updateBulletPosition(){
+    void updateBulletPosition(){
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
+        if(isOutOfBounds()){
+            destroy();
+            snake.destroySpitju(this);
+
+        }
     }
 
 

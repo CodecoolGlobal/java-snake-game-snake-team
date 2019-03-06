@@ -17,7 +17,7 @@ public class Snake implements Animatable {
 
     private static int instanceCounter = 0;
     private boolean alive;
-    private KeyCode turnLeftKey, turnRightKey;
+    private KeyCode turnLeftKey, turnRightKey, spitjuKey;
     private double speed = 2;
     private int health = 100;
     private SnakeHead head;
@@ -34,8 +34,10 @@ public class Snake implements Animatable {
         addPart(4);
         if(instanceCounter ==1){
             turnLeftKey = KeyCode.LEFT; turnRightKey = KeyCode.RIGHT;
+            spitjuKey = KeyCode.SPACE;
         } else {
             turnLeftKey = KeyCode.A; turnRightKey = KeyCode.D;
+            spitjuKey = KeyCode.W;
         }
         spitjus = new ArrayList<>();
     }
@@ -47,14 +49,13 @@ public class Snake implements Animatable {
         updateSnakeBodyHistory();
         checkForGameOverConditions();
         body.doPendingModifications();
-        if(spitjus.size()>0)
-            spitjus.forEach(Spitju::updateBulletPosition);
+        spitjus.forEach(Spitju::updateBulletPosition);
     }
 
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if(InputHandler.getInstance().isKeyPressed(KeyCode.SPACE)){
+        if(InputHandler.getInstance().isKeyPressed(spitjuKey)){
             spitjus.add(new Spitju(this));
         }
         if(InputHandler.getInstance().isKeyPressed(turnLeftKey)){
@@ -99,8 +100,13 @@ public class Snake implements Animatable {
     }
 
 
-    public SnakeHead getHead(){
+    SnakeHead getHead(){
         return head;
+    }
+
+    void destroySpitju(Spitju spitju){
+        spitjus.remove(spitju);
+        System.out.println("SPITJJUUUUU");
     }
 
     private void checkForGameOverConditions() {
