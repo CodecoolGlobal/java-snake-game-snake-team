@@ -32,7 +32,7 @@ public class Game extends Pane {
         spawnSnake(400,400);
         spawnEnemies(4);
         spawnPowerUps(2, 2, 2);
-        GameLoop gameLoop = new GameLoop(snake);
+        GameLoop gameLoop = new GameLoop(snakes);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
         gameTimer.play();

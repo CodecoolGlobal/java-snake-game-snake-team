@@ -13,7 +13,8 @@ import javafx.scene.input.KeyCode;
 public class Snake implements Animatable {
     private static int instanceCounter = 0;
     private KeyCode turnLeftKey, turnRightKey;
-    private static float speed = 2;
+
+    private float speed = 2;
     private int health = 100;
 
     private SnakeHead head;
