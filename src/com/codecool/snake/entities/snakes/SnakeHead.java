@@ -21,6 +21,10 @@ public class SnakeHead extends GameEntity implements Interactable {
         setPosition(position);
     }
 
+    protected Snake getSnake() {
+        return snake;
+    }
+
     public void updateRotation(SnakeControl turnDirection, float speed) {
         double headRotation = getRotate();
 
