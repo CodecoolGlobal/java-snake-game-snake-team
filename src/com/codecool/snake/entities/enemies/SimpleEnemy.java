@@ -16,6 +16,10 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
 
     private Point2D heading;
     private static Random rnd = new Random();
+    private int dirX = 1;
+    private int dirY = 1;
+
+
 
     public SimpleEnemy() {
         super(10);
@@ -23,21 +27,28 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
         setImage(Globals.getInstance().getImage("SimpleEnemy"));
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
-
         double direction = rnd.nextDouble() * 360;
+            int speed = 1;
         setRotate(direction);
-
-        int speed = 1;
         heading = Utils.directionToVector(direction, speed);
     }
 
+    public Point2D getHeading(){
+        return heading;
+    }
+
+
+
     @Override
     public void step() {
-        if (isOutOfBounds()) {
-            destroy();
+        if (getX() <= 1 || getX() >= Globals.WINDOW_WIDTH-1) {
+            this.dirX *= -1;
         }
-        setX(getX() + heading.getX());
-        setY(getY() + heading.getY());
+        if (getY() <= 1 || getY() >= Globals.WINDOW_HEIGHT-1) {
+            this.dirY *= -1;
+        }
+        setX(getX() + heading.getX() * dirX);
+        setY(getY() + heading.getY() * dirY);
     }
 
     @Override
@@ -45,7 +56,9 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
         if(entity instanceof SnakeHead){
             System.out.println(getMessage());
             destroy();
+            new SimpleEnemy();
         }
+
     }
 
     @Override
