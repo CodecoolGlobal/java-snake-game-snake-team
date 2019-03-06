@@ -67,6 +67,14 @@ public class Snake implements Animatable {
         speed += 1;
     }
 
+    public void moveSlower() {
+        if (speed > 1) {
+            speed -=1;
+        } else {
+            speed = (float) 0.8;
+        }
+    }
+
     public void fillHealth() {
         health += 10;
     }
