@@ -4,60 +4,92 @@ import com.codecool.snake.Globals;
 import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
-
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
-
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 
+
 public class Snake implements Animatable {
+
+
     private static int instanceCounter = 0;
-    private KeyCode turnLeftKey, turnRightKey;
-
-    private float speed = 2;
-    private int health = 100;
-
+    private boolean alive;
+    private KeyCode turnLeftKey, turnRightKey, spitjuKey;
+    private double speed = 2;
+    private int health = 50;
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
-    private boolean alive;
+    private double spitjuTimeWindow;
+    private List<Spitju> spitjus;
+
 
 
     public Snake(Vec2d position) {
+        ++instanceCounter;
         alive = true;
         head = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
         addPart(4);
-        ++instanceCounter;
         if(instanceCounter ==1){
             turnLeftKey = KeyCode.LEFT; turnRightKey = KeyCode.RIGHT;
+            spitjuKey = KeyCode.SPACE;
         } else {
             turnLeftKey = KeyCode.A; turnRightKey = KeyCode.D;
+            spitjuKey = KeyCode.W;
         }
+        spitjus = new LinkedList<>();
     }
+
+
+    private void updateSpitju(){
+        Iterator<Spitju> iter = spitjus.iterator();
+        try {
+            while (iter.hasNext()) {
+                iter.next().updateSpitjuPosition();
+            }
+        }catch (Exception error){
+            System.out.println(spitjus.size());
+        }
+
+    }
+
 
     public void step() {
         SnakeControl turnDir = getUserInput();
         head.updateRotation(turnDir, speed);
-
         updateSnakeBodyHistory();
-        checkForGameOverConditions();
-
+        checkForGameOverConditions(); List<Spitju> spitjus;
         body.doPendingModifications();
+        spitjuTimeWindow -= (spitjuTimeWindow >0) ? 1 : 0;
+        updateSpitju();
     }
+
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if(InputHandler.getInstance().isKeyPressed(turnLeftKey)) turnDir = SnakeControl.TURN_LEFT;
-        if(InputHandler.getInstance().isKeyPressed(turnRightKey)) turnDir = SnakeControl.TURN_RIGHT;
+        if(InputHandler.getInstance().isKeyPressed(spitjuKey)){
+            if(spitjuTimeWindow ==0) {
+                spitjus.add(new Spitju(this));
+                spitjuTimeWindow = 10;
+            }
+        }
+        if(InputHandler.getInstance().isKeyPressed(turnLeftKey)){
+            turnDir = SnakeControl.TURN_LEFT;
+        }
+        if(InputHandler.getInstance().isKeyPressed(turnRightKey)){
+            turnDir = SnakeControl.TURN_RIGHT;
+        }
         return turnDir;
     }
 
-    public void addPart(int numParts) {
+
+    void addPart(int numParts) {
         GameEntity parent = getLastPart();
         Vec2d position = parent.getPosition();
         Snake snake = head.getSnake();
-
         for (int i = 0; i < numParts; i++) {
             SnakeBody newBodyPart = new SnakeBody(position, snake);
             body.add(newBodyPart);
@@ -65,7 +97,13 @@ public class Snake implements Animatable {
         Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
     }
 
-    public void moveFaster() {
+
+    List<Spitju> getSpitjus(){
+        return spitjus;
+    }
+
+
+    void moveFaster() {
         speed += 1;
     }
 
@@ -82,8 +120,22 @@ public class Snake implements Animatable {
     }
 
 
-    public void changeHealth(int diff) {
+    void changeHealth(int diff) {
         health += diff;
+    }
+
+
+    double getSpeed(){
+        return speed;
+    }
+
+
+    SnakeHead getHead(){
+        return head;
+    }
+
+    void destroySpitju(Spitju spitju){
+        spitjus.remove(spitju);
     }
 
     private void checkForGameOverConditions() {
@@ -115,9 +167,9 @@ public class Snake implements Animatable {
         }
     }
 
+
     private GameEntity getLastPart() {
         GameEntity result = body.getLast();
-
         if(result != null) return result;
         return head;
     }
