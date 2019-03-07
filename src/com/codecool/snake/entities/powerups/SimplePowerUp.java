@@ -19,7 +19,6 @@ public class SimplePowerUp extends GameEntity implements Interactable {
     @Override
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead){
-            System.out.println(getMessage());
             destroy();
             int randomNum = rnd.nextInt(10);
             if (randomNum < 3) {
@@ -31,10 +30,5 @@ public class SimplePowerUp extends GameEntity implements Interactable {
                 new BerryPowerUp();
             }
         }
-    }
-
-    @Override
-    public String getMessage() {
-        return "Got power-up :)";
     }
 }

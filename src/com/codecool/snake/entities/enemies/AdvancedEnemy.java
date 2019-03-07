@@ -30,11 +30,9 @@ public class AdvancedEnemy extends Enemy implements Animatable, Interactable {
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof SnakeHead || entity instanceof SnakeBody){
-            System.out.println(getMessage());
-        }
-
+//        if(entity instanceof SnakeHead || entity instanceof SnakeBody){}
     }
+
 
     @Override
     public void step() {
@@ -49,10 +47,5 @@ public class AdvancedEnemy extends Enemy implements Animatable, Interactable {
         }
         setX(getX() + dirX);
         setY(getY() + dirY);
-    }
-
-    @Override
-    public String getMessage() {
-        return "BAAAARF\nSLOWED DOWN!";
     }
 }

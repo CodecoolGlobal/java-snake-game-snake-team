@@ -13,7 +13,7 @@ class GameLoop {
     private boolean running = false;
 
 
-    GameLoop(List<Snake> snakes){
+    GameLoop(List<Snake> snakes) {
         this.snakes = snakes;
     }
 
@@ -29,23 +29,19 @@ class GameLoop {
 
 
     void step() {
-        if(running) {
-            for(Snake snake : snakes) {
-                if(!snake.isAlive()){
-                    snakes.remove(snake);
-                } else{
-                    snake.step();
-                    for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
-                        if (gameObject instanceof Animatable) {
-                            ((Animatable) gameObject).step();
-                        }
+        if (running) {
+            for (Snake snake : snakes) {
+                if(snake.isAlive()) snake.step();
+                for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
+                    if (gameObject instanceof Animatable) {
+                        ((Animatable) gameObject).step();
                     }
-                    checkCollisions();
                 }
+                checkCollisions();
             }
         }
         Globals.getInstance().display.frameFinished();
-    }
+}
 
 
     private void checkCollisions() {

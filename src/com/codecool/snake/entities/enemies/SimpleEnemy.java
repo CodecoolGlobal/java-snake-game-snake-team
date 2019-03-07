@@ -14,23 +14,21 @@ import javafx.geometry.Point2D;
 
 public class SimpleEnemy extends Enemy implements Animatable, Interactable {
 
-
     private Point2D heading;
     private static Random rnd = new Random();
     private int dirX = 1, dirY = 1;
-    private boolean alive;
+    private boolean alive = true;
+    private int timeWindow;
 
 
     public SimpleEnemy() {
         super(10);
-        setImage(Globals.getInstance().getImage("SimpleEnemy"));
-        updateMovementPattern();
-        alive = true;
+        initMovement();
     }
 
 
-    private void updateMovementPattern() {
-        System.out.println(getMessage());
+    private void initMovement() {
+        resurrect();
         Random randbool = new Random();
         if (randbool.nextBoolean()) {
             if (randbool.nextBoolean()) {
@@ -65,22 +63,32 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
             }
             setX(getX() + heading.getX() * dirX);
             setY(getY() + heading.getY() * dirY);
+        } else {
+            System.out.println(timeWindow);
+            if(timeWindow++ >= 70){
+                initMovement();
+                timeWindow = 0;
+            }
         }
+    }
+
+
+    private void resurrect(){
+        alive = true;
+        setImage(Globals.getInstance().getImage("SimpleEnemy"));
+    }
+
+
+    private void explode(){
+        alive = false;
+        setImage(Globals.getInstance().getImage("explosion"));
     }
 
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof SnakeHead || entity instanceof SnakeBody  || entity instanceof Spitju){
-            setImage(Globals.getInstance().getImage("SimpleEnemy"));
-            updateMovementPattern();
+        if (alive && (entity instanceof SnakeHead || entity instanceof SnakeBody || entity instanceof Spitju)) {
+            explode();
         }
-
-    }
-
-
-    @Override
-    public String getMessage() {
-        return (getDamage() + " damage");
     }
 }

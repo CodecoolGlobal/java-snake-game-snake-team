@@ -47,7 +47,6 @@ public class SnakeHead extends GameEntity implements Interactable {
     }
 
 
-
     @Override
     public Vec2d getPosition() {
         return super.getPosition();
@@ -55,31 +54,21 @@ public class SnakeHead extends GameEntity implements Interactable {
 
 
     @Override
-    public void apply(GameEntity entity) {
+    public void apply(GameEntity entity){
         if(entity instanceof Enemy){
-            System.out.println(getMessage());
             snake.changeHealth(((Enemy) entity).getDamage());
         }
         if(entity instanceof BerryPowerUp){
-            System.out.println(getMessage());
             snake.addPart(4);
         }
         if(entity instanceof RedbullPowerUp){
-            System.out.println(getMessage());
             snake.moveFaster();
         }
         if(entity instanceof HeartPowerUp){
-            System.out.println(getMessage());
             snake.fillHealth();
         }
         if (entity instanceof AdvancedEnemy) {
             snake.moveSlower();
         }
-    }
-
-
-    @Override
-    public String getMessage() {
-        return "IMMA SNAEK HED! SPITTIN' MAH WENOM! SPITJU-SPITJU!";
     }
 }
