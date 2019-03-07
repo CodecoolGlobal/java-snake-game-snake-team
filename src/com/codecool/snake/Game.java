@@ -18,7 +18,7 @@ class Game extends Pane {
 
     private List<Snake> snakes;
     private GameTimer gameTimer = new GameTimer();
-    private static final int ENEMIES = 6, REDBULLS = 1, FOODS = 2, MEDIKITS = 2;
+    private static final int ENEMIES = 12, REDBULLS = 4, FOODS = 6, MEDIKITS = 4;
     private static final int STARTING_YCOR = 500;
     private static int STARTING_XCOR = 300;
 

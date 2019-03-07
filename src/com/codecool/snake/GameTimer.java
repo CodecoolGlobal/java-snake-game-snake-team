@@ -14,12 +14,12 @@ public class GameTimer {
         this(DEFAULT_60_FPS);
     }
 
-    GameTimer(double frameTime) {
+    private GameTimer(double frameTime) {
         this.frameTime = frameTime;
         System.out.println("GameTimer created with frame time: " + frameTime);
     }
 
-    public void setup(Runnable loopMethod) {
+    void setup(Runnable loopMethod) {
         timer.setCycleCount( Timeline.INDEFINITE );
 
         KeyFrame kf = new KeyFrame(
@@ -29,7 +29,7 @@ public class GameTimer {
         timer.getKeyFrames().add( kf );
     }
 
-    public void play() {
+    void play() {
         timer.play();
         System.out.println("GameTimer playing.");
     }

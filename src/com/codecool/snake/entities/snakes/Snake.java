@@ -6,6 +6,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Snake implements Animatable {
 
 
-    private static final int STARTING_BODYPARTS = 4;
+    private static final int STARTING_BODYPARTS = 14;
 
     private static int instanceCounter = 0;
     private boolean alive = true;
@@ -40,10 +41,19 @@ public class Snake implements Animatable {
     }
 
 
+    private void rotateBody(){
+        List<GameEntity> bodyParts = body.getList();
+        for(GameEntity part : bodyParts){
+            ((SnakeBody)part).setRotate(head.getRotate());
+        }
+    }
+
+
     public void step() {
         if(alive) {
             SnakeControl turnDir = getUserInput();
             head.updateRotation(turnDir, speed);
+            rotateBody();
             updateSnakeBodyHistory();
             checkForGameOverConditions();
             body.doPendingModifications();

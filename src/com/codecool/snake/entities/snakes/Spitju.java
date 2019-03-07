@@ -26,18 +26,21 @@ public class Spitju extends GameEntity implements Interactable, Animatable {
         setY(startPos.y);
     }
 
+    private void outOfBoundsHandler(){
+        if(isOutOfBounds()) destroy();
+    }
+
 
     @Override
     public void step(){
         setX(getX() + heading.getX());
         setY(getY() + heading.getY());
+        outOfBoundsHandler();
     }
 
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof Enemy){
-            destroy();
-        }
+        if(entity instanceof Enemy) destroy();
     }
 }
