@@ -44,6 +44,7 @@ public class Spitju extends GameEntity implements Interactable {
 
     }
 
+
     @Override
     public void apply(GameEntity entity) {
         if(entity instanceof Enemy){
@@ -52,6 +53,7 @@ public class Spitju extends GameEntity implements Interactable {
         }
 
     }
+
 
     @Override
     public String getMessage(){
