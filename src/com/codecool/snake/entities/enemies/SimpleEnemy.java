@@ -28,8 +28,20 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
 
     private void updateMovementPattern() {
         System.out.println(getMessage());
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+        Random randbool = new Random();
+
+        if (randbool.nextBoolean()) {
+            setX(Globals.WINDOW_WIDTH-10);
+        } else {
+            setX(10);
+        }
+
+        if (randbool.nextBoolean()) {
+            setY(Globals.WINDOW_HEIGHT-10);
+        } else {
+            setY(10);
+        }
+
         double direction = rnd.nextDouble() * 360;
         int speed = 1;
         setRotate(direction);
