@@ -42,11 +42,13 @@ public class DelayedModificationList<T> {
         oldObjects.clear();
     }
 
+
     public T getLast() {
         if(!newObjects.isEmpty()) return newObjects.get(newObjects.size()-1);
         if(!objects.isEmpty()) return objects.get(objects.size()-1);
         return null;
     }
+
 
     void clear() {
         objects.clear();

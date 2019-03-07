@@ -6,7 +6,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
-import java.util.LinkedList;
+
 import java.util.List;
 
 
@@ -15,15 +15,18 @@ public class Snake implements Animatable {
 
 
     private static final int STARTING_BODYPARTS = 14;
-
+    private static final double SLOW_SPEED = 0.8;
     private static int instanceCounter = 0;
+
+
     private boolean alive = true;
-    private KeyCode turnLeftKey, turnRightKey, spitjuKey;
     private double speed = 2;
     private int health = 50;
     private SnakeHead head;
-    private DelayedModificationList<GameEntity> body;
+    private KeyCode turnLeftKey, turnRightKey, spitjuKey;
     private double spitjuTimeWindow;
+    private int slowTimeWindow;
+    private DelayedModificationList<GameEntity> body;
 
 
     public Snake(Vec2d position) {
@@ -49,10 +52,20 @@ public class Snake implements Animatable {
     }
 
 
+    private void move(){
+        SnakeControl turnDir = getUserInput();
+        if(slowTimeWindow>0) {
+            head.updateRotation(turnDir, SLOW_SPEED);
+            --slowTimeWindow;
+        } else {
+            head.updateRotation(turnDir, speed);
+        }
+    }
+
+
     public void step() {
         if(alive) {
-            SnakeControl turnDir = getUserInput();
-            head.updateRotation(turnDir, speed);
+            move();
             rotateBody();
             updateSnakeBodyHistory();
             checkForGameOverConditions();
@@ -98,12 +111,9 @@ public class Snake implements Animatable {
 
 
     void moveSlower() {
-        if (speed > 1) {
-            speed -=1;
-        } else {
-            speed = (float) 0.8;
-        }
+        slowTimeWindow = 300;
     }
+
 
 
     void fillHealth() {
