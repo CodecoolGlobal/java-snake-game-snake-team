@@ -30,17 +30,23 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
         System.out.println(getMessage());
         Random randbool = new Random();
 
-        if (randbool.nextBoolean()) {
-            setX(Globals.WINDOW_WIDTH-10);
-        } else {
-            setX(10);
-        }
 
         if (randbool.nextBoolean()) {
-            setY(Globals.WINDOW_HEIGHT-10);
+            if (randbool.nextBoolean()) {
+                setX(Globals.WINDOW_WIDTH-10);
+            } else {
+                setX(10);
+            }
+            setY(rnd.nextInt((int) Globals.WINDOW_HEIGHT));
         } else {
-            setY(10);
+            if (randbool.nextBoolean()) {
+                setY(Globals.WINDOW_HEIGHT -10);
+            } else {
+                setY(10);
+            }
+            setX(rnd.nextInt((int) Globals.WINDOW_WIDTH));
         }
+
 
         double direction = rnd.nextDouble() * 360;
         int speed = 1;
