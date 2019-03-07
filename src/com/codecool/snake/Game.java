@@ -2,6 +2,7 @@ package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.AdvancedEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.snakes.Health;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.entities.powerups.BerryPowerUp;
 import com.codecool.snake.entities.powerups.RedbullPowerUp;
@@ -45,8 +46,14 @@ public class Game extends Pane {
         Globals.getInstance().startGame();
     }
 
+    private void spawnHealth(Snake snake, int snakeNum) {
+        new Health(snake, snakeNum);
+    }
+
     private void spawnSnake(int xCor, int yCor) {
-        snakes.add(new Snake(new Vec2d(xCor, yCor)));
+        Snake snake = new Snake(new Vec2d(xCor, yCor));
+        snakes.add(snake);
+        spawnHealth(snake, snakes.size());
     }
 
     private void spawnEnemies(int numberOfEnemies) {
