@@ -6,7 +6,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,9 +19,10 @@ public class Snake implements Animatable {
     private boolean alive;
     private KeyCode turnLeftKey, turnRightKey, spitjuKey;
     private double speed = 2;
-    private int health = 100;
+    private int health = 50;
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
+    private double spitjuTimeWindow;
     private List<Spitju> spitjus;
 
 
@@ -39,7 +40,20 @@ public class Snake implements Animatable {
             turnLeftKey = KeyCode.A; turnRightKey = KeyCode.D;
             spitjuKey = KeyCode.W;
         }
-        spitjus = new ArrayList<>();
+        spitjus = new LinkedList<>();
+    }
+
+
+    private void updateSpitju(){
+        Iterator<Spitju> iter = spitjus.iterator();
+        try {
+            while (iter.hasNext()) {
+                iter.next().updateSpitjuPosition();
+            }
+        }catch (Exception error){
+            System.out.println(spitjus.size());
+        }
+
     }
 
 
@@ -47,16 +61,20 @@ public class Snake implements Animatable {
         SnakeControl turnDir = getUserInput();
         head.updateRotation(turnDir, speed);
         updateSnakeBodyHistory();
-        checkForGameOverConditions();
+        checkForGameOverConditions(); List<Spitju> spitjus;
         body.doPendingModifications();
-        spitjus.forEach(Spitju::updateBulletPosition);
+        spitjuTimeWindow -= (spitjuTimeWindow >0) ? 1 : 0;
+        updateSpitju();
     }
 
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
         if(InputHandler.getInstance().isKeyPressed(spitjuKey)){
-            spitjus.add(new Spitju(this));
+            if(spitjuTimeWindow ==0) {
+                spitjus.add(new Spitju(this));
+                spitjuTimeWindow = 10;
+            }
         }
         if(InputHandler.getInstance().isKeyPressed(turnLeftKey)){
             turnDir = SnakeControl.TURN_LEFT;
@@ -77,6 +95,11 @@ public class Snake implements Animatable {
             body.add(newBodyPart);
         }
         Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
+    }
+
+
+    List<Spitju> getSpitjus(){
+        return spitjus;
     }
 
 
@@ -106,7 +129,6 @@ public class Snake implements Animatable {
 
     void destroySpitju(Spitju spitju){
         spitjus.remove(spitju);
-        System.out.println("SPITJJUUUUU");
     }
 
     private void checkForGameOverConditions() {
