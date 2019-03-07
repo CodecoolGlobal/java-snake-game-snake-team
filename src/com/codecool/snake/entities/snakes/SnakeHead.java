@@ -8,7 +8,6 @@ import com.codecool.snake.entities.enemies.Enemy;
 import com.codecool.snake.entities.powerups.BerryPowerUp;
 import com.codecool.snake.entities.powerups.HeartPowerUp;
 import com.codecool.snake.entities.powerups.RedbullPowerUp;
-
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
 

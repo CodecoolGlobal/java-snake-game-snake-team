@@ -5,25 +5,30 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.snakes.Snake;
 import java.util.List;
 
-public class GameLoop {
+
+
+class GameLoop {
+
     private List<Snake> snakes;
     private boolean running = false;
 
 
-    public GameLoop(List<Snake> snakes){
+    GameLoop(List<Snake> snakes){
         this.snakes = snakes;
     }
 
 
-    public void start() {
+    void start() {
         running = true;
     }
 
-    public void stop() {
+
+    void stop() {
         running = false;
     }
 
-    public void step() {
+
+    void step() {
         if(running) {
             for(Snake snake : snakes) {
                 if(!snake.isAlive()){
@@ -41,6 +46,7 @@ public class GameLoop {
         }
         Globals.getInstance().display.frameFinished();
     }
+
 
     private void checkCollisions() {
         List<GameEntity> gameObjs = Globals.getInstance().display.getObjectList();

@@ -38,6 +38,8 @@ public class Globals {
         resources.addImage("AdvancedEnemy", new Image("advanced_enemy.png"));
         resources.addImage("HealthIcon", new Image("health.png"));
         resources.addImage("bullet", new Image("bullet.png"));
+        resources.addImage("explosion", new Image("explosion1.png"));
+
     }
 
     public Image getImage(String name) { return resources.getImage(name); }
