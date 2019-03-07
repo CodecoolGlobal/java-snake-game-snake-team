@@ -115,6 +115,7 @@ public class Snake implements Animatable {
         return head;
     }
 
+
     int getHealth(){
         return health;
     }
@@ -127,7 +128,6 @@ public class Snake implements Animatable {
         alive = false;
         --instanceCounter;
     }
-
 
 
     private void checkForGameOverConditions() {

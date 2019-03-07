@@ -19,17 +19,17 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     private static Random rnd = new Random();
     private int dirX = 1, dirY = 1;
     private boolean alive = true;
-    private int timeWindow;
+    private int explosionTime;
 
 
     public SimpleEnemy() {
         super(10);
+        resurrect();
         initMovement();
     }
 
 
     private void initMovement() {
-        resurrect();
         Random randbool = new Random();
         if (randbool.nextBoolean()) {
             if (randbool.nextBoolean()) {
@@ -56,18 +56,15 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     @Override
     public void step() {
         if(alive) {
-            if (getX() <= 1 || getX() >= Globals.WINDOW_WIDTH - 1) {
-                this.dirX *= -1;
-            }
-            if (getY() <= 1 || getY() >= Globals.WINDOW_HEIGHT - 1) {
-                this.dirY *= -1;
-            }
+            if (getX() <= 1 || getX() >= Globals.WINDOW_WIDTH - 1) this.dirX *= -1;
+            if (getY() <= 1 || getY() >= Globals.WINDOW_HEIGHT - 1) this.dirY *= -1;
             setX(getX() + heading.getX() * dirX);
             setY(getY() + heading.getY() * dirY);
         } else {
-            if(timeWindow++ >= 40){
+            if(++explosionTime >= 40){
+                resurrect();
                 initMovement();
-                timeWindow = 0;
+                explosionTime = 0;
             }
         }
     }
@@ -87,7 +84,7 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
 
     @Override
     public void apply(GameEntity entity) {
-        if (alive && (entity instanceof SnakeHead || entity instanceof SnakeBody || entity instanceof Spitju)) {
+        if (alive && (entity instanceof SnakeHead || entity instanceof SnakeBody || entity instanceof Spitju)){
             explode();
         }
     }
