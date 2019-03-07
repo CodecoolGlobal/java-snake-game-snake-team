@@ -23,10 +23,15 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     public SimpleEnemy() {
         super(10);
         setImage(Globals.getInstance().getImage("SimpleEnemy"));
+        updateMovementPattern();
+    }
+
+    private void updateMovementPattern() {
+        System.out.println(getMessage());
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
         double direction = rnd.nextDouble() * 360;
-            int speed = 1;
+        int speed = 1;
         setRotate(direction);
         heading = Utils.directionToVector(direction, speed);
     }
@@ -48,9 +53,7 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
     @Override
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead || entity instanceof SnakeBody){
-            System.out.println(getMessage());
-            destroy();
-            new SimpleEnemy();
+            updateMovementPattern();
         }
 
     }
