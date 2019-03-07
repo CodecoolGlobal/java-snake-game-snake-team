@@ -33,7 +33,7 @@ class Game extends Pane {
 
 
     private void init() {
-        spawnSnake(2);
+        spawnSnake(1);
         spawnEnemies();
         spawnPowerUps();
         GameLoop gameLoop = new GameLoop(snakes);

@@ -5,6 +5,7 @@ import com.codecool.snake.Utils;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.AdvancedEnemy;
 import com.codecool.snake.entities.enemies.Enemy;
+import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.BerryPowerUp;
 import com.codecool.snake.entities.powerups.HeartPowerUp;
 import com.codecool.snake.entities.powerups.RedbullPowerUp;
@@ -17,6 +18,7 @@ public class SnakeHead extends GameEntity implements Interactable {
 
 
     private static final float turnRate = 2;
+    private static final int NEW_BODYPARTS = 3;
     private Snake snake;
 
 
@@ -55,11 +57,12 @@ public class SnakeHead extends GameEntity implements Interactable {
 
     @Override
     public void apply(GameEntity entity){
-        if(entity instanceof Enemy){
-            snake.changeHealth(((Enemy) entity).getDamage());
+        if(entity instanceof SimpleEnemy && ((SimpleEnemy) entity).isAlive()){
+            snake.changeHealth(((SimpleEnemy) entity).getDamage());
+            System.out.println(snake.getHealth());
         }
         if(entity instanceof BerryPowerUp){
-            snake.addPart(4);
+            snake.addPart(NEW_BODYPARTS);
         }
         if(entity instanceof RedbullPowerUp){
             snake.moveFaster();

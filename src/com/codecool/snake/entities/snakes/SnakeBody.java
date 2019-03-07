@@ -6,6 +6,7 @@ import java.util.Queue;
 
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
+import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.sun.javafx.geom.Vec2d;
 
 
@@ -44,7 +45,7 @@ public class SnakeBody extends GameEntity implements Interactable {
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof Enemy){
+        if(entity instanceof SimpleEnemy && ((SimpleEnemy)entity).isAlive()){
             snake.changeHealth(((Enemy) entity).getDamage());
         }
     }

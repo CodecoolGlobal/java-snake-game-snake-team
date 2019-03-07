@@ -15,7 +15,6 @@ public class Snake implements Animatable {
 
     private static final int STARTING_BODYPARTS = 4;
 
-
     private static int instanceCounter = 0;
     private boolean alive = true;
     private KeyCode turnLeftKey, turnRightKey, spitjuKey;
@@ -56,7 +55,7 @@ public class Snake implements Animatable {
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
         if(InputHandler.getInstance().isKeyPressed(spitjuKey)){
-                if(spitjuTimeWindow ==0) {
+            if(spitjuTimeWindow ==0) {
                 new Spitju(this);
                 spitjuTimeWindow = 10;
             }
@@ -102,8 +101,8 @@ public class Snake implements Animatable {
     }
 
 
-    void changeHealth(int diff) {
-        health += diff;
+    void changeHealth(int damage) {
+        health -= damage;
     }
 
 
@@ -114,6 +113,10 @@ public class Snake implements Animatable {
 
     SnakeHead getHead(){
         return head;
+    }
+
+    int getHealth(){
+        return health;
     }
 
 

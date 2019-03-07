@@ -14,6 +14,7 @@ import javafx.geometry.Point2D;
 
 public class SimpleEnemy extends Enemy implements Animatable, Interactable {
 
+
     private Point2D heading;
     private static Random rnd = new Random();
     private int dirX = 1, dirY = 1;
@@ -64,8 +65,7 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
             setX(getX() + heading.getX() * dirX);
             setY(getY() + heading.getY() * dirY);
         } else {
-            System.out.println(timeWindow);
-            if(timeWindow++ >= 70){
+            if(timeWindow++ >= 40){
                 initMovement();
                 timeWindow = 0;
             }
@@ -90,5 +90,10 @@ public class SimpleEnemy extends Enemy implements Animatable, Interactable {
         if (alive && (entity instanceof SnakeHead || entity instanceof SnakeBody || entity instanceof Spitju)) {
             explode();
         }
+    }
+
+
+    public boolean isAlive(){
+        return alive;
     }
 }

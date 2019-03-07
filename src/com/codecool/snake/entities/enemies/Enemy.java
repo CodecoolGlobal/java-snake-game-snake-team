@@ -6,7 +6,6 @@ public abstract class Enemy extends GameEntity{
 
     private final int damage;
 
-
     Enemy(int damage) {
         this.damage = damage;
     }

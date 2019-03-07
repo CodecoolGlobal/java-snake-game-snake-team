@@ -5,7 +5,6 @@ import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
-import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
 
@@ -14,13 +13,11 @@ import javafx.geometry.Point2D;
 public class Spitju extends GameEntity implements Interactable, Animatable {
 
 
-    private Snake snake;
     private Point2D heading;
     private static final int RELATIVE_SPEED = 6;
 
 
     Spitju(Snake snake) {
-        this.snake = snake;
         setImage(Globals.getInstance().getImage("Spitju"));
         setRotate(snake.getHead().getRotate());
         Vec2d startPos = snake.getHead().getPosition();
