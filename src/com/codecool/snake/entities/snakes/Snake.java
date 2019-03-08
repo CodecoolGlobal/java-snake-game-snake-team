@@ -6,7 +6,7 @@ import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
-
+import javafx.scene.text.Text;
 import java.util.List;
 
 
@@ -26,7 +26,9 @@ public class Snake implements Animatable {
     private KeyCode turnLeftKey, turnRightKey, spitjuKey;
     private double spitjuTimeWindow;
     private int slowTimeWindow;
+    private Text text;
     private DelayedModificationList<GameEntity> body;
+
 
 
     public Snake(Vec2d position) {
@@ -41,13 +43,15 @@ public class Snake implements Animatable {
             turnLeftKey = KeyCode.A; turnRightKey = KeyCode.D;
             spitjuKey = KeyCode.W;
         }
+        text = new Text();
+        text.setX(250); text.setY(250);
     }
 
 
     private void rotateBody(){
         List<GameEntity> bodyParts = body.getList();
         for(GameEntity part : bodyParts){
-            ((SnakeBody)part).setRotate(head.getRotate());
+            part.setRotate(head.getRotate());
         }
     }
 
@@ -80,7 +84,7 @@ public class Snake implements Animatable {
         if(InputHandler.getInstance().isKeyPressed(spitjuKey)){
             if(spitjuTimeWindow ==0) {
                 new Spitju(this);
-                spitjuTimeWindow = 10;
+                spitjuTimeWindow = 20;
             }
         }
         if(InputHandler.getInstance().isKeyPressed(turnLeftKey)){
@@ -123,6 +127,7 @@ public class Snake implements Animatable {
 
     void changeHealth(int damage) {
         health -= damage;
+        text.setText(Integer.toString(health));
     }
 
 

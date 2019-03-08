@@ -7,7 +7,7 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
-
+import static com.codecool.snake.Audio.playBlasterSound;
 
 
 public class Spitju extends GameEntity implements Interactable, Animatable {
@@ -24,6 +24,7 @@ public class Spitju extends GameEntity implements Interactable, Animatable {
         heading = Utils.directionToVector(snake.getHead().getRotate(), snake.getSpeed() + RELATIVE_SPEED);
         setX(startPos.x+10);
         setY(startPos.y);
+        if(snake.isAlive()) playBlasterSound();
     }
 
     private void outOfBoundsHandler(){
