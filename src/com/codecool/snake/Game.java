@@ -25,7 +25,7 @@ class Game extends Pane {
     private static int STARTING_XCOR = 300;
 
 
-    Game() {
+     Game() {
         snakes = new LinkedList<>();
         Globals.getInstance().game = this;
         Globals.getInstance().display = new Display(this);
